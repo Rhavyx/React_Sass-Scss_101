@@ -1,0 +1,103 @@
+$circle-size: 100px;
+$circle-stroke-color: #fbff009c;
+$circle-radius: 45;
+
+// SVG styles.
+svg {
+    animation: 2s linear infinite svg-animation;
+    max-width: 100px;
+}
+  
+  // SVG animation.
+@keyframes svg-animation {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(360deg)
+    }
+}
+  
+@function get-dash-value($radius, $percentage) {
+    // Using $radius, calculate circumference.
+    $circumference: 2 * 3.1415927 * $radius;
+
+    // Convert percentage to decimal.
+    // i.e. 50% = 0.5.
+    $percentage-as-decimal: $percentage / 100%;
+
+    // Return unit value.
+    @return $circumference * $percentage-as-decimal;
+}
+
+.loading{
+    height: 100vh;
+    width: 100%;
+    background-color: black;
+    position: absolute;
+    .circle {
+        height: $circle-size;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        width: $circle-size;
+        .text{
+            display: flex;
+            position: absolute;
+            top: 0;
+            color: yellow;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            .counter{
+                font-size: large;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+  
+.circle__svg {
+    animation: 2s linear infinite both circle__svg;
+}
+
+@keyframes circle__svg {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(360deg)
+    }
+}
+
+.circle__svg-circle {
+    animation: 1.4s ease-in-out infinite both circle__svg-circle;
+    fill: transparent;
+    stroke: $circle-stroke-color;
+    stroke-dasharray: get-dash-value($circle-radius, 100%);
+    stroke-linecap: round;
+    stroke-width: 10;
+    transform-origin: 50% 50%;
+}
+  
+@keyframes circle__svg-circle {
+    0%, 25% {
+        stroke-dashoffset: get-dash-value($circle-radius, 97%);
+        transform: rotate(0);
+    }
+
+    50%, 75% {
+        stroke-dashoffset: get-dash-value($circle-radius, 25%);
+        transform: rotate(45deg);
+    }
+
+    100% {
+        stroke-dashoffset: get-dash-value($circle-radius, 97%);
+        transform: rotate(360deg);
+    }
+}
+  
